@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+  <head>
+     <link href="../static/styles/style.css" th:href="@{/styles/style.css}" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta charset="UTF-8">
+  </head>
+
+  <body>
+      <div style="justify-content: center!important;" id="header">
+        <div  class="logo"><p>SHOUTBOX</p></div>
+      </div>
+     
+      <div id="main_chat">
+
+        <div id="main_chat_container">
+          <div id="msg_container">
+            <ul>
+              <div class="error_container">
+                <div class="text_error_page">
+                  <p>405</p>
+                </div>
+                <div class="more_error_page">
+
+                </div>
+                <div class="button_error_page">
+                  <a  th:href="@{/user/chat}" class="btn">HOME</a>
+                </div>
+              </div>
+             
+              
+            </ul>
+          </div> 
+        </div>
+      </div>
+      
+      <script
+      src="https://code.jquery.com/jquery-3.6.0.js"
+      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+      crossorigin="anonymous"></script>
+      <script
+      src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+      integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+      crossorigin="anonymous"></script>
+     <script th:src="@{/js/main.js}"  type="text/javascript"></script>
+  </body>
+
+</html>

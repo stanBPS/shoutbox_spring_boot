@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+  <head>
+    <link href="../static/styles/style.css" th:href="@{/styles/style.css}" rel="stylesheet" />
+    <meta charset="UTF-8">
+  </head>
+
+  <body>
+    <div id="main_co">
+      <div id="main_container">
+        <div class="titre_container">
+          <span>SHOUTBOX</span>
+        </div>
+        <form action="#" th:action="@{/register}" th:object="${user}" method="POST">
+	        <div id="formulaire_container">       
+	          <div id='formulaire_register'>
+	            <div class="pseudo_container">
+	              <label for="pseudo">Pseudo</label>
+	              <input type="text" name="userPseudo" id="pseudo" autocomplete="off">
+	            </div>
+	            <div class="mdp_container">
+	              <label for="mdp">Mot de passe</label>
+	              <input type="password" name="userPassword" id="mdp" >
+	            </div>
+	          </div>
+	        </div>
+	        
+	        <div id="container_button">
+	          <div id="button_inscription">
+	            <input type="submit" value="S'inscrire" class="btn" />
+	          </div>
+	        </div> 
+        </form>
+         <div id="">
+             <p style="text-align: center;">Vous avez déjà  un compte? <a th:href="@{/login}" class="link_register">se connecter</a></p><br>
+          </div>
+        
+      </div>
+    </div>
+    
+    
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.js"
+      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+      crossorigin="anonymous"></script>
+      <script
+      src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+      integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+      crossorigin="anonymous"></script>
+    <script src="main.js" type="text/javascript"></script>
+  </body>
+  
+</html>

@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+  <head>
+     <link href="../static/styles/style.css" th:href="@{/styles/style.css}" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta charset="UTF-8">
+  </head>
+
+  <body>
+      <div id="header">
+        <div class="logo"><p>SHOUTBOX</p></div>
+        <div class="menu_container">
+          <ul class="menu">
+            <li><a href="#" th:href="@{/user/chat}">Home</a></li>
+            <li sec:authorize="hasAuthority('administrateur')"><a th:href="@{/admin/gestion_report}">Gestion</a></li>
+             <li class="name_connect"><i class="material-icons">account_box</i><a href="#" th:text="${username}"></a></li>
+             <li class=""><a href="#" th:href="@{/logout}">Deconnexion</a></li>
+          </ul>
+        </div>
+      </div>
+      <div id="main_chat">
+        <div id="search_bar_container">
+          <div id="search_bar">
+            <input class="input_search_user" type="search" name="" id="" placeholder="user...">
+            <input class="input_search_text" type="search" name="" id="" placeholder="text...">
+          </div>
+          <div id="button_search">
+            <i class="material-icons large">search</i>
+          </div>    
+        </div>
+        <div id="main_chat_container">  
+          <div id="msg_container">
+            <ul  >
+              <li class="message_li" th:each="m : ${message}"  th:style="${m.idPseudo.userPseudo == username} ? 'background:green':''">
+                <div class="msg">
+                  <p   th:text="${m.report != null} ? 'En cours de moderation...' : ${m.messageSubject}"></p>
+                </div> 
+                <div class="name_date_alert">
+                  <div class="info_container">
+                    <div class="name_date">
+                      <span class="name" th:text="${m.idPseudo.userPseudo}" ></span>
+                      <span class="date" th:text="${m.dateEnvoi}"></span>
+                    </div>
+                    <!--  <div  th:if="${username == m.idPseudo.userPseudo }" class="modif_container">
+                      <span class="modif cursor-pointer"><i class="material-icons">edit</i></span>
+                    </div>-->
+                    <div  th:if="${username != m.idPseudo.userPseudo && m.report == null && m.canReport == true}" class="alert_container">
+                      <span th:attr="data-id=${m.idMessage}" class="alert cursor-pointer"><i class="material-icons">priority_high</i></span>
+                    </div>
+                  </div>    
+                </div>  
+                <div class="container_modal_report">
+			        <div class="modal_report">
+			          <div class="modal_card" >
+			            <span class="close"><i class="material-icons large">close</i></span>
+			            <p class="title_modal">Signalé un message</p>
+			            <form action="#" th:action="@{/user/chat/report}" th:object="${report_send}" method="POST">
+				            <div class="radio_container">    
+				              <p class="radio_button_report"><input type="radio" name="reportSubject" th:value="Spam"/><span>Spam</span></p>
+				              <p class="radio_button_report"><input type="radio" name="reportSubject" th:value="inappropries"/><span>Propos inappropriés ou dangereux</span></p>
+				              <p class="radio_button_report"><input type="radio" name="reportSubject" th:value="haineux"/><span>Discours haineux</span></p>
+				              <p class="radio_button_report"><input type="radio" name="reportSubject" th:value="Nudite"/><span>Nudité</span></p>     
+				               <input  type="hidden" name="message" th:value="${m.idMessage}">    
+				            </div>	           
+				            <div class="button_report">
+				              <button type="submit" class="btn valid_report">Valider</button>
+				            </div>
+			            </form>
+			          </div>
+			        </div>
+			     </div>
+              </li>
+            </ul>
+          </div> 
+        </div>
+        <form action="#" th:action="@{/user/chat/add}" th:object="${message}" method="POST">
+	        <div id="text_button_container">
+	          <div id="text_chat_container">
+	            <input type="text" name="messageSubject" id="msg_to_send">
+	          </div>	          
+	           	<input  type="hidden" name="idPseudo" th:value="${users1.idPseudo}">
+	           	<div id="image_add">
+	            	<i class="material-icons">image</i>
+	          </div>
+	          <div id="button_chat_container">
+	          
+	            <button type="submit" class="btn">Envoyer</button>
+	          </div>
+	      	</div>
+      	</form>
+      </div>
+      <script
+      src="https://code.jquery.com/jquery-3.6.0.js"
+      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+      crossorigin="anonymous"></script>
+      <script
+      src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+      integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+      crossorigin="anonymous"></script>
+      <script th:src="@{/js/main.js}"  type="text/javascript"></script>
+  </body>
+
+</html>

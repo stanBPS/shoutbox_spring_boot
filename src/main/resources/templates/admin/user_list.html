@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+  <head>
+    <link href="../static/styles/style.css" th:href="@{/styles/style.css}" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta charset="UTF-8">
+  </head>
+
+  <body>
+    <div id="header">
+      <div class="logo"><p>SHOUTBOX</p></div>
+      <div class="menu_container">
+        <ul class="menu">
+            <li><a href="#" th:href="@{/user/chat}">Home</a></li>
+            <li sec:authorize="hasAuthority('administrateur')"><a th:href="@{/admin/gestion_report}">Gestion</a></li>
+             <li class="name_connect"><i class="material-icons">account_box</i><a href="#" th:text="${username}"></a></li>
+            <li><a href="#" th:href="@{/logout}">Deconnexion</a></li>
+          </ul>
+      </div>
+    </div>
+    <div id="main_gestion">
+      <div  id="main_gestion_container">
+        <div id="menu_gestion">
+          <ul>
+            <li><a th:href="@{/admin/gestion_report}">Gestion report</a></li>
+            <li><a th:href="@{/admin/gestion_message}">Gestion message</a></li>
+            <li class="selected"><a th:href="@{/admin/user_list}">Liste des utilisateurs</a></li>
+            <li><a th:href="@{/admin/add_user}">Ajouter un utilisateur</a></li>
+          </ul>
+        </div>
+        <div id="table_gestion">
+            <h2>Liste des utilisateurs</h2>
+            <table>
+              <thead>
+                <tr>
+                  <th>Pseudo</th>
+                  <th>Role</th>
+                  <th>Nombre de message</th>
+                  <th></th>
+                  
+                
+                </tr>
+              </thead>
+              <tbody>
+                <tr th:each="u : ${user}">
+                  <td th:text="${u.userPseudo}"></td>
+                  <td th:text="${u.idRole.libelleRole}"></td>
+                  <td th:text="${#lists.size(u.messages)}"></td>
+                  <td><a th:href="|@{/admin/user_list/delete/{idPseudo}(idPseudo=${u.idPseudo})}|"><i class="material-icons delete_user">delete</i></a></td>
+                </tr>
+              </tbody>
+            </table>
+        </div>
+      </div>
+    </div>
+    
+    
+    <script
+      src="https://code.jquery.com/jquery-3.6.0.js"
+      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+      crossorigin="anonymous"></script>
+      <script
+      src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+      integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+      crossorigin="anonymous"></script>
+   <script th:src="@{/js/main.js}"  type="text/javascript"></script>
+  </body>
+  
+</html>

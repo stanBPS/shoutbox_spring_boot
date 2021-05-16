@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+ xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity4">
+  <head>
+    <link href="../static/styles/style.css" th:href="@{/styles/style.css}" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+    <meta charset="UTF-8">
+  </head>
+
+  <body>
+    <div id="header">
+      <div class="logo"><p>SHOUTBOX</p></div>
+      <div class="menu_container">
+        <ul class="menu">
+            <li><a href="#" th:href="@{/user/chat}">Home</a></li>
+            <li sec:authorize="hasAuthority('administrateur')"><a th:href="@{/admin/gestion_report}">Gestion</a></li>
+            <li class="name_connect"><i class="material-icons">account_box</i><a href="#" th:text="${username}"></a></li>
+            <li><a href="#" th:href="@{/logout}">Deconnexion</a></li>
+          </ul>
+      </div>
+    </div>
+    
+    <div id="main_gestion">
+      <div  id="main_gestion_container">
+        <div id="menu_gestion">
+          <ul>
+            <li><a th:href="@{/admin/gestion_report}">Gestion report</a></li>
+            <li class="selected"><a th:href="@{/admin/gestion_message}">Gestion message</a></li>
+            <li><a th:href="@{/admin/user_list}">Liste des utilisateurs</a></li>
+            <li><a th:href="@{/admin/add_user}">Ajouter un utilisateur</a></li>
+          </ul>
+        </div>
+        <div id="table_gestion">
+          <div class="container_card"  th:each="m : ${message}">
+            <div class="info_message_by">
+              <p class=" message_by">Message de <span class="pseudo_message" th:text="${m.idPseudo.userPseudo}" ></span>
+               le <span class="date_message" th:text="${m.dateEnvoi}"></span>
+                </p>
+            </div>
+            <div class="message_container">
+              <p class="messageSubject" th:text="${m.messageSubject}"></p>
+            </div>
+            <div class="button_report">
+              <a th:attr="data-id=${m.idMessage},data-idpseudo=${m.idPseudo.idPseudo}" class="btn edit_button">Modifier</a>
+              <a th:href="|@{/admin/gestion_message/delete/{idMessage}(idMessage=${m.idMessage})}|" class="btn">Supprimer</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+	<div class="container_modal_edit">
+      <div class="modal_edit">
+        <div class="modal_card_edit" >
+          <span class="close"><i class="material-icons large">close</i></span>
+          <p class="title_modal">Editer le message de <span>name</span></p>
+          <form class="action_modif" action="#" th:action="@{/admin/gestion_message/edit}" th:object="${message}" method="post" >
+	          <div class="edit_container">         
+	              <input type="text" th:name="messageSubject" th:value="${messageSubject}" class="msg_edit">   
+	              <input  type="hidden" name="idPseudo" >   
+	               <input  type="hidden" name="idMessage" >  
+	          </div>
+	          <div class="button_edit">
+	            <a href="" class="btn">Annuler</a>
+	            <button type="submit" class="btn edit_text">Valider</button>
+	          </div>
+          </form>
+        </div>
+      </div>
+    </div> 
+      <script
+      src="https://code.jquery.com/jquery-3.6.0.js"
+      integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk="
+      crossorigin="anonymous"></script>
+      <script
+      src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"
+      integrity="sha256-T0Vest3yCU7pafRw9r+settMBX6JkKN06dqBnpQ8d30="
+      crossorigin="anonymous"></script>
+      <script th:src="@{/js/main.js}"  type="text/javascript"></script>
+  </body>
+  
+</html>
